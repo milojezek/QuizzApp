@@ -7,7 +7,7 @@ import android.util.Log
 class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_quiz_questions)
+        setContentView(R.layout.activity_game)
 
         val questionsList = Constants.getQuestions()
         Log.i("QuestionsList size is", "${questionsList.size}")
