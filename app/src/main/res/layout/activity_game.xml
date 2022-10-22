@@ -61,6 +61,25 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/button_option_one"
+            style="@style/option_button"
+            tools:text="Country" />
+
+        <Button
+            android:id="@+id/button_option_two"
+            style="@style/option_button"
+            tools:text="Country" />
+
+        <Button
+            android:id="@+id/button_option_three"
+            style="@style/option_button"
+            tools:text="Country" />
+
+        <Button
+            android:id="@+id/button_option_four"
+            style="@style/option_button"
+            tools:text="Country" />
 
     </LinearLayout>
 

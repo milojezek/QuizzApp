@@ -11,5 +11,6 @@
 
     <color name="gray">#bcbcbc</color>
     <color name="gray_light">#ededed</color>
+    <color name="blue_gray_dark">#263238</color>
     <color name="blue_gray">#78909c</color>
 </resources>
