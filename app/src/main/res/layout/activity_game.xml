@@ -27,7 +27,7 @@
         <ImageView
             android:id="@+id/imageview_image"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:layout_marginTop="16dp"
             android:contentDescription="Quiz Image"
             tools:src="@drawable/czech_flag" />
@@ -80,6 +80,13 @@
             android:id="@+id/button_option_four"
             style="@style/option_button"
             tools:text="Country" />
+
+        <Button
+            android:id="@+id/button_submit"
+            style="@style/option_button"
+            android:backgroundTint="@color/blue_gray_dark"
+            android:textColor="@color/white"
+            android:text="Submit" />
 
     </LinearLayout>
 
