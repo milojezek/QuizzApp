@@ -1,5 +1,6 @@
 package eu.milo4apps.quizzapp
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,9 +11,11 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
 
     private var currentPosition: Int = 1
     private lateinit var questionsList: MutableList<Question>
-
     private lateinit var currentOptionsList: MutableList<Button>
     private var selectedOptionPosition: Int = 0
+
+    private lateinit var userName: String
+    private var correctAnswers: Int = 0
 
     private lateinit var progressBar: ProgressBar
     private lateinit var tvProgress: TextView
@@ -29,6 +32,8 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
+
+        userName = intent.getStringExtra(Constants.USER_NAME).toString()
 
         progressBar = findViewById(R.id.progressbar)
         tvProgress = findViewById(R.id.textview_progress)
@@ -101,7 +106,12 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
                     if (currentPosition <= questionsList.size) {
                         setQuestion()
                     } else {
-                        Toast.makeText(this, "You made it to the end", Toast.LENGTH_LONG).show()
+                        val intent = Intent(this, ResultActivity::class.java)
+                        intent.putExtra(Constants.USER_NAME, userName)
+                        intent.putExtra(Constants.CORRECT_ANSWERS, correctAnswers)
+                        intent.putExtra(Constants.TOTAL_QUESTIONS, questionsList.size)
+                        startActivity(intent)
+                        finish()
                     }
                 } else {
                     val question = questionsList.get(currentPosition - 1)
@@ -112,6 +122,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
                     } else {
                         highlightAnswer(selectedOptionPosition, true)
                         turnOffButtons(currentOptionsList)
+                        correctAnswers++
                     }
 
                     if (currentPosition == questionsList.size) {
