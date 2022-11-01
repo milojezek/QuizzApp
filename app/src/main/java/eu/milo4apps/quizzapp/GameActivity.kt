@@ -4,10 +4,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 
 class GameActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -69,6 +66,8 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
 
         currentOptionsList = mutableListOf(btnOptionOne, btnOptionTwo, btnOptionThree, btnOptionFour)
 
+        defaultOptionsView()
+
         if (currentPosition == questionsList.size) {
             btnSubmit.text = "Finish"
         } else {
@@ -80,6 +79,8 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
         for (option in currentOptionsList) {
             option.setBackgroundColor(Color.parseColor("#ededed"))
         }
+
+        turnOnButtons(currentOptionsList)
     }
 
     private fun chooseOption(optionButton: Button, selectedOptionNum: Int) {
@@ -94,10 +95,74 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
             R.id.button_option_two -> chooseOption(btnOptionTwo, 2)
             R.id.button_option_three -> chooseOption(btnOptionThree, 3)
             R.id.button_option_four -> chooseOption(btnOptionFour, 4)
-            R.id.button_submit -> TODO("Implement submit button functionality")
+            R.id.button_submit -> {
+                if (selectedOptionPosition == 0) {
+                    currentPosition++
+                    if (currentPosition <= questionsList.size) {
+                        setQuestion()
+                    } else {
+                        Toast.makeText(this, "You made it to the end", Toast.LENGTH_LONG).show()
+                    }
+                } else {
+                    val question = questionsList.get(currentPosition - 1)
+                    if (question.correctAnswer != selectedOptionPosition) {
+                        highlightAnswer(selectedOptionPosition, false)
+                        highlightAnswer(question.correctAnswer, true)
+                        turnOffButtons(currentOptionsList)
+                    } else {
+                        highlightAnswer(selectedOptionPosition, true)
+                        turnOffButtons(currentOptionsList)
+                    }
+
+                    if (currentPosition == questionsList.size) {
+                        btnSubmit.text = "FINISH"
+                    } else {
+                        btnSubmit.text = "GO TO NEXT QUESTION"
+                    }
+
+                    selectedOptionPosition = 0
+                }
+            }
         }
     }
 
+    private fun turnOffButtons(currentLs: MutableList<Button>) {
+        for (b in currentLs) {
+            b.isClickable = false
+        }
+    }
+
+    private fun turnOnButtons(currentLs: MutableList<Button>) {
+        for (b in currentLs) {
+            b.isClickable = true
+        }
+    }
+
+    private fun highlightAnswer(answer: Int, isCorrect: Boolean) {
+        if (isCorrect) {
+            when (answer) {
+                1 -> setCorrectColor(btnOptionOne)
+                2 -> setCorrectColor(btnOptionTwo)
+                3 -> setCorrectColor(btnOptionThree)
+                4 -> setCorrectColor(btnOptionFour)
+            }
+        } else {
+            when (answer) {
+                1 -> setWrongColor(btnOptionOne)
+                2 -> setWrongColor(btnOptionTwo)
+                3 -> setWrongColor(btnOptionThree)
+                4 -> setWrongColor(btnOptionFour)
+            }
+        }
+    }
+
+    private fun setCorrectColor(btn: Button) {
+        btn.setBackgroundColor(Color.parseColor("#cddc39"))
+    }
+
+    private fun setWrongColor(btn: Button) {
+        btn.setBackgroundColor(Color.parseColor("#ff5722"))
+    }
 
 
 }

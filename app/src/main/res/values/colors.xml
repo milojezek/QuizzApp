@@ -13,4 +13,7 @@
     <color name="gray_light">#ededed</color>
     <color name="blue_gray_dark">#263238</color>
     <color name="blue_gray">#78909c</color>
+
+    <color name="green_right">#cddc39</color>
+    <color name="red_wrong">#ff5722</color>
 </resources>
